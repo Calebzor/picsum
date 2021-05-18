@@ -48,21 +48,10 @@ dependencies {
     }
     kapt DI.daggerHiltAnnotationProcessor
 
-    implementation AutoDispose.base
-    implementation AutoDispose.arch
-    implementation AutoDispose.archKtx
-    implementation AutoDispose.androidKtx
-    implementation AutoDispose.lifecycleKtx
-
 
 //Timber
     implementation LoggerFramework.timber
 
-//Moshi
-    implementation Moshi.core
-    kapt Moshi.codegen
-
-    implementation Network.okhttp
 }
 
 configurations {

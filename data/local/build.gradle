@@ -1,0 +1,16 @@
+apply from: rootProject.file('gradle/moduleFeatureApi.gradle')
+apply from: rootProject.file('gradle/kotlinKapt.gradle')
+apply plugin: DI.daggerHiltGradlePlugin
+
+dependencies {
+    implementation project(path: ':core')
+    implementation project(path: ':data:model')
+    implementation AndroidX.lifecycleLivedataKtx
+    implementation AndroidX.roomCompiler
+    implementation AndroidX.roomKtx
+    kapt AndroidX.roomCompiler
+    implementation DI.daggerHilt
+    kapt DI.daggerHiltAnnotationProcessor
+    implementation Kotlin.stdLib
+    implementation LoggerFramework.timber
+}
