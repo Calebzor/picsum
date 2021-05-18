@@ -1,0 +1,20 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: "androidx.navigation.safeargs.kotlin"
+apply from: rootProject.file('gradle/sdkVersions.gradle')
+
+android {
+    buildFeatures.buildConfig = false
+    // fixes "Method not mocked" errors
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+}
+
+dependencies {
+    implementation AndroidX.fragmentKtx
+    implementation DI.javaxInject
+    implementation Kotlin.stdLib
+    implementation Rx.java
+    implementation Rx.android
+}

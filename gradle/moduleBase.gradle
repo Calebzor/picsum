@@ -1,0 +1,71 @@
+apply plugin: 'kotlin-android'
+apply plugin: "androidx.navigation.safeargs.kotlin"
+apply from: rootProject.file('gradle/kotlinKapt.gradle')
+apply from: rootProject.file('gradle/sdkVersions.gradle')
+apply from: rootProject.file("gradle/defaultConfig.gradle")
+apply from: rootProject.file("gradle/test.gradle")
+
+android {
+    defaultConfig {
+        multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
+    }
+    // fixes "Method not mocked" errors
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+    packagingOptions {
+        exclude 'META-INF/*'
+    }
+}
+
+dependencies {
+    implementation AndroidX.appCompat
+    implementation AndroidX.constraintLayout
+    implementation AndroidX.coreKtx
+    implementation AndroidX.fragmentKtx
+    implementation AndroidX.recyclerView
+    implementation AndroidX.lifecycleVieModel
+    implementation AndroidX.lifecycleVieModelKtx
+    implementation AndroidX.lifecycleRuntimeKtx
+    implementation AndroidX.roomRuntime
+    implementation AndroidX.navigationFragmentKtx
+    implementation AndroidX.navigationUIKtx
+    kapt AndroidX.lifecycleCompiler
+
+    implementation Google.material
+
+    implementation Kotlin.stdLib
+
+//Dagger
+    implementation(DI.daggerAndroid) {
+        exclude group: 'com.android.support'
+    }
+    kapt DI.daggerAnnotationProcessor
+    kapt DI.daggerAndroidAnnotationProcessor
+    implementation(DI.daggerHilt) {
+        exclude group: 'javax.annotation'
+    }
+    kapt DI.daggerHiltAnnotationProcessor
+
+    implementation AutoDispose.base
+    implementation AutoDispose.arch
+    implementation AutoDispose.archKtx
+    implementation AutoDispose.androidKtx
+    implementation AutoDispose.lifecycleKtx
+
+
+//Timber
+    implementation LoggerFramework.timber
+
+//Moshi
+    implementation Moshi.core
+    kapt Moshi.codegen
+
+    implementation Network.okhttp
+}
+
+configurations {
+    // We include the jdk variant, so the deprecated jrre variant can be excluded.
+    implementation.exclude module: 'kotlin-stdlib-jre7'
+}

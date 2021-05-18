@@ -1,0 +1,9 @@
+apply plugin: 'kotlin-kapt'
+
+kapt {
+    arguments {
+        arg("dagger.formatGeneratedSource", "disabled")
+        arg("dagger.hilt.disableModulesHaveInstallInCheck", "true")
+    }
+    useBuildCache = true
+}

@@ -1,0 +1,21 @@
+apply plugin: 'com.android.library'
+apply from: rootProject.file('gradle/moduleFeature.gradle')
+apply plugin: DI.daggerHiltGradlePlugin
+
+android {
+
+    defaultConfig {
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+
+}

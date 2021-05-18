@@ -1,0 +1,8 @@
+android {
+    defaultConfig {
+        versionCode AppVersion.versionCode
+        versionName AppVersion.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+}

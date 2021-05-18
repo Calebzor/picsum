@@ -1,0 +1,16 @@
+apply from: rootProject.file('gradle/moduleFeature.gradle')
+apply plugin: 'kotlin-android'
+
+dependencies {
+    api project(':features:listApi')
+    implementation project(path: ':core')
+
+    api Retrofit.core
+    implementation Retrofit.moshi
+    implementation Retrofit.retrofitCoroutineAdapter
+    implementation Network.httpLoggingInterceptor
+    implementation AndroidX.swipeRefreshLayout
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+}
+
