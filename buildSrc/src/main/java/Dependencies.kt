@@ -17,13 +17,14 @@ object Versions {
     val hilt = "2.35"
     val androidXLifecycleVersion = "2.4.0-alpha01"
     val androidxFragmentVersion = "1.3.3"
-    val androidXRoomVersion = "2.2.6"
+    val androidXRoomVersion = "2.3.0"
     val autoDisposeVersion = "1.0.0"
     val moshiVersion = "1.12.0"
     val okhttpVersion = "4.9.0"
     val retrofit = "2.9.0"
     val retrofitCoroutines = "0.9.2"
     val nav = "2.3.5"
+    val page = "3.0.0"
 }
 
 object Kotlin {
@@ -35,7 +36,7 @@ object AndroidX {
     val constraintLayout = "androidx.constraintlayout:constraintlayout:2.0.4"
     val coreKtx = "androidx.core:core-ktx:1.5.0-rc02"
     val fragmentKtx = "androidx.fragment:fragment-ktx:${Versions.androidxFragmentVersion}"
-    val recyclerView = "androidx.recyclerview:recyclerview:1.1.0"
+    val recyclerView = "androidx.recyclerview:recyclerview:1.2.0"
     val lifecycleVieModel = "androidx.lifecycle:lifecycle-viewmodel:${Versions.androidXLifecycleVersion}"
     val lifecycleLivedataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.androidXLifecycleVersion}"
     val lifecycleRuntimeKtx = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.androidXLifecycleVersion}"
@@ -47,7 +48,7 @@ object AndroidX {
     val navigationFragmentKtx = "androidx.navigation:navigation-fragment-ktx:${Versions.nav}"
     val navigationUIKtx = "androidx.navigation:navigation-ui-ktx:${Versions.nav}"
     val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
-    val pagination = "androidx.paging:paging-runtime:2.1.2"
+    val pagination = "androidx.paging:paging-runtime-ktx:${Versions.page}"
 }
 
 object Coil {

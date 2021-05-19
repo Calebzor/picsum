@@ -6,7 +6,7 @@ dependencies {
     implementation project(path: ':core')
     implementation project(path: ':data:model')
     implementation AndroidX.lifecycleLivedataKtx
-    implementation AndroidX.roomCompiler
+    implementation AndroidX.roomRuntime
     implementation AndroidX.roomKtx
     kapt AndroidX.roomCompiler
     implementation DI.daggerHilt

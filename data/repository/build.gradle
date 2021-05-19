@@ -9,6 +9,7 @@ dependencies {
     api project(path: ':data:local')
     implementation Retrofit.retrofitCoroutineAdapter
     implementation AndroidX.lifecycleLivedataKtx
+    implementation AndroidX.pagination
     implementation DI.daggerHilt
     kapt DI.daggerHiltAnnotationProcessor
     implementation Kotlin.stdLib
