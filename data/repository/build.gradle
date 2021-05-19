@@ -3,9 +3,10 @@ apply from: rootProject.file('gradle/kotlinKapt.gradle')
 apply plugin: DI.daggerHiltGradlePlugin
 
 dependencies {
-    implementation project(path: ':core')
-    implementation project(path: ':data:model')
-    implementation project(path: ':data:remote')
+    api project(path: ':core')
+    api project(path: ':data:model')
+    api project(path: ':data:remote')
+    api project(path: ':data:local')
     implementation Retrofit.retrofitCoroutineAdapter
     implementation AndroidX.lifecycleLivedataKtx
     implementation DI.daggerHilt

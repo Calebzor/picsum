@@ -7,5 +7,6 @@ dependencies {
     implementation project(path: ':data:model')
 
     implementation AndroidX.swipeRefreshLayout
+    implementation Coil.coil
 }
 

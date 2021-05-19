@@ -1,4 +1,4 @@
-package hu.tvarga.repository.resource
+package hu.tvarga.core.resource
 
 data class Resource<out T>(val status: Status, val data: T?, val error: Throwable?) {
     companion object {

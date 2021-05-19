@@ -1,4 +1,4 @@
-package hu.tvarga.repository.coroutine
+package hu.tvarga.core.coroutine
 
 import kotlinx.coroutines.CoroutineDispatcher
 

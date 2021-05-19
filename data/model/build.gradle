@@ -1,7 +1,10 @@
 apply plugin: 'kotlin'
+apply from: rootProject.file('gradle/kotlinKapt.gradle')
 
 dependencies {
     implementation Kotlin.stdLib
     implementation AndroidX.roomRuntime
     implementation Retrofit.moshi
+    implementation Moshi.core
+    kapt Moshi.codegen
 }

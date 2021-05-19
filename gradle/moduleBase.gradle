@@ -48,6 +48,7 @@ dependencies {
     }
     kapt DI.daggerHiltAnnotationProcessor
 
+    implementation Retrofit.core
 
 //Timber
     implementation LoggerFramework.timber

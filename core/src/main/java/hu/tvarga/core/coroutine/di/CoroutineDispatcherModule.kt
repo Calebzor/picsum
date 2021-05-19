@@ -1,10 +1,10 @@
-package hu.tvarga.repository.coroutine.di
+package hu.tvarga.core.coroutine.di
 
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import hu.tvarga.repository.coroutine.AppDispatchers
+import hu.tvarga.core.coroutine.AppDispatchers
 import kotlinx.coroutines.Dispatchers
 
 @Module

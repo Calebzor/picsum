@@ -24,7 +24,7 @@ object ListModule {
 
     @Provides
     fun retrofit(okHttpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder().client(okHttpClient).baseUrl("https://picsum.photos/")
+        return Retrofit.Builder().client(okHttpClient).baseUrl("https://picsum.photos/v2/")
             .addConverterFactory(MoshiConverterFactory.create())
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()

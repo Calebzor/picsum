@@ -2,5 +2,7 @@ apply from: rootProject.file('gradle/moduleFeatureApi.gradle')
 
 
 dependencies {
-    implementation project(path: ':core')
+    api project(path: ':core')
+    api project(path: ':data:model')
+    api project(path: ':data:repository')
 }

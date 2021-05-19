@@ -47,6 +47,11 @@ object AndroidX {
     val navigationFragmentKtx = "androidx.navigation:navigation-fragment-ktx:${Versions.nav}"
     val navigationUIKtx = "androidx.navigation:navigation-ui-ktx:${Versions.nav}"
     val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+    val pagination = "androidx.paging:paging-runtime:2.1.2"
+}
+
+object Coil {
+    val coil = "io.coil-kt:coil:1.2.1"
 }
 
 object Google {
