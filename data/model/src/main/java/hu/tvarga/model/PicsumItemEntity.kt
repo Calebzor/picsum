@@ -3,7 +3,7 @@ package hu.tvarga.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "picsums")
 data class PicsumItemEntity(
     @PrimaryKey
     val id: String,

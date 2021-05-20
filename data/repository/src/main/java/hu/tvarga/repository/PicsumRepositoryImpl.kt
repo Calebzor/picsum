@@ -1,74 +1,39 @@
 package hu.tvarga.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import hu.tvarga.core.resource.Resource
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import hu.tvarga.listapi.PicsumRepository
-import hu.tvarga.local.dao.PicsumDao
-import hu.tvarga.model.PicsumApiObject
-import hu.tvarga.model.PicsumItem
+import hu.tvarga.local.database.PicsumDatabase
 import hu.tvarga.model.PicsumItemEntity
 import hu.tvarga.remote.PicsumDatasource
-import hu.tvarga.repository.resource.NetworkBoundResource
-import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.flow.Flow
 
 class PicsumRepositoryImpl(
     private val datasource: PicsumDatasource,
-    private val dao: PicsumDao
+    private val database: PicsumDatabase
 ) : PicsumRepository {
 
-    override suspend fun getPicsums(forceRefresh: Boolean, page: Int): LiveData<Resource<List<PicsumItem>>> {
-        return object : NetworkBoundResource<List<PicsumItem>, List<PicsumApiObject>>() {
+    override fun getPicsums(): Flow<PagingData<PicsumItemEntity>> {
 
-            override fun processResponse(response: List<PicsumApiObject>): List<PicsumItem> =
-                response.map { it.toPicsum() }
+        val pagingSourceFactory = { database.picsumDao().getPicsumItemEntitys() }
 
-            override suspend fun saveCallResults(items: List<PicsumItem>) =
-                dao.save(items.map { it.toPicsumItemEntity() })
-
-            override fun shouldFetch(data: List<PicsumItem>?): Boolean = data == null || data.isEmpty() || forceRefresh
-
-            override suspend fun loadFromDb(): List<PicsumItem> = dao.getPicsumItemEntitys().map { it.toPicsumItem() }
-
-            override fun createCallAsync(): Deferred<List<PicsumApiObject>> = datasource.fetchList(page)
-
-        }.build().asLiveData()
+        @OptIn(ExperimentalPagingApi::class)
+        return Pager(
+            config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
+            remoteMediator = PicsumRemoteMediator(
+                datasource,
+                database
+            ),
+            pagingSourceFactory = pagingSourceFactory
+        ).flow
     }
 
-    override suspend fun getPicsum(id: String): LiveData<PicsumItem> {
-        val picsumEntity = dao.getPicsumItemEntity(id)
-        val picsumLiveData = MutableLiveData<PicsumItem>()
-        picsumEntity.let { picsumLiveData.postValue(it.toPicsumItem()) }
-        return picsumLiveData
+    companion object {
+        private const val NETWORK_PAGE_SIZE = 30
     }
+
 }
 
-private fun PicsumApiObject.toPicsum(): PicsumItem =
-    PicsumItem(
-        id = this.id,
-        author = this.author,
-        width = this.width,
-        height = this.height,
-        url = this.url,
-        downloadUrl = this.downloadUrl,
-    )
 
-private fun PicsumItem.toPicsumItemEntity(): PicsumItemEntity =
-    PicsumItemEntity(
-        id = this.id,
-        author = this.author,
-        width = this.width,
-        height = this.height,
-        url = this.url,
-        downloadUrl = this.downloadUrl,
-    )
-
-private fun PicsumItemEntity.toPicsumItem(): PicsumItem =
-    PicsumItem(
-        id = this.id,
-        author = this.author,
-        width = this.width,
-        height = this.height,
-        url = this.url,
-        downloadUrl = this.downloadUrl,
-    )

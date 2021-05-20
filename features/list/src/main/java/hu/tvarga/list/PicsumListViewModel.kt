@@ -1,41 +1,38 @@
 package hu.tvarga.list
 
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import androidx.paging.map
 import coil.load
 import dagger.hilt.android.lifecycle.HiltViewModel
 import hu.tvarga.core.base.BaseViewModel
-import hu.tvarga.core.coroutine.AppDispatchers
-import hu.tvarga.core.resource.Resource
-import hu.tvarga.core.util.Event
 import hu.tvarga.list.domain.GetPicsumsUseCase
 import hu.tvarga.model.PicsumItem
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import hu.tvarga.model.PicsumItemEntity
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import timber.log.Timber
 import javax.inject.Inject
 
 
 @HiltViewModel
 class PicsumListViewModel @Inject constructor(
-    private val getPicsumsUseCase: GetPicsumsUseCase,
-    private val dispatchers: AppDispatchers
+    private val getPicsumsUseCase: GetPicsumsUseCase
 ) : BaseViewModel() {
 
-    private val _picsums = MediatorLiveData<Resource<List<PicsumItem>>>()
-    val picsums: LiveData<Resource<List<PicsumItem>>> get() = _picsums
-    private var eucListSource: LiveData<Resource<List<PicsumItem>>> = MutableLiveData()
+    private var currentResult: Flow<PagingData<PicsumItem>>? = null
 
-    fun getpicsums(forceRefresh: Boolean) = viewModelScope.launch(dispatchers.main) {
-        _picsums.removeSource(eucListSource) // We make sure there is only one source of livedata (allowing us properly refresh)
-        withContext(dispatchers.io) { eucListSource = getPicsumsUseCase(forceRefresh = forceRefresh) }
-        _picsums.addSource(eucListSource) {
-            _picsums.value = it
-            if (it.status == Resource.Status.ERROR) _snackbarError.value = Event(R.string.an_error_happened)
+    fun getPicsums(): Flow<PagingData<PicsumItem>> {
+        val lastResult = currentResult
+        if (lastResult != null) {
+            return lastResult
         }
+        val newResult = getPicsumsUseCase().map { pagingData -> pagingData.map { it.toPicsumItem() } }
+            .cachedIn(viewModelScope)
+        currentResult = newResult
+        return newResult
     }
 
     fun picsumListItemClick(id: String) {
@@ -54,3 +51,13 @@ class PicsumListViewModel @Inject constructor(
         }
     }
 }
+
+private fun PicsumItemEntity.toPicsumItem(): PicsumItem =
+    PicsumItem(
+        id = this.id,
+        author = this.author,
+        width = this.width,
+        height = this.height,
+        url = this.url,
+        downloadUrl = this.downloadUrl,
+    )

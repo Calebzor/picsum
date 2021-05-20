@@ -13,4 +13,5 @@ dependencies {
     kapt DI.daggerHiltAnnotationProcessor
     implementation Kotlin.stdLib
     implementation LoggerFramework.timber
+    implementation AndroidX.pagination
 }

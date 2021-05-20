@@ -4,18 +4,38 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import hu.tvarga.core.base.BaseFragment
-import hu.tvarga.core.resource.Resource
 import hu.tvarga.list.databinding.ListFragmentBinding
 import hu.tvarga.list.view.PicsumAdapter
-import hu.tvarga.model.PicsumItem
-import timber.log.Timber
+import hu.tvarga.list.view.PicsumLoadStateAdapter
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.launch
 
 class ListFragment : BaseFragment(R.layout.list_fragment) {
     private var _binding: ListFragmentBinding? = null
     private val binding get() = _binding!!
     private val picsumListViewModel: PicsumListViewModel by viewModels()
+    private val picsumListAdapter: PicsumAdapter = PicsumAdapter()
+
+    private var loadJob: Job? = null
+
+    private fun load() {
+        loadJob?.cancel()
+        loadJob = lifecycleScope.launch {
+            getViewModel().getPicsums().collectLatest {
+                picsumListAdapter.submitData(it)
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,36 +48,58 @@ class ListFragment : BaseFragment(R.layout.list_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val picsumListAdapter = PicsumAdapter(getViewModel())
-        binding.picsumListRv.apply {
+        initAdapter()
+
+        load()
+        scrollToTopOnRefresh()
+    }
+
+    private fun scrollToTopOnRefresh() {
+        lifecycleScope.launch {
+            picsumListAdapter.loadStateFlow
+                .distinctUntilChangedBy { it.refresh }
+                .filter { it.refresh is LoadState.NotLoading }
+                .collect { binding.list.scrollToPosition(0) }
+        }
+    }
+
+    private fun initAdapter() {
+        picsumListAdapter.viewModelPicsum = getViewModel()
+        binding.list.apply {
             adapter = picsumListAdapter
         }
-        binding.picsumListRefresh.setOnRefreshListener { getViewModel().getpicsums(true) }
-        picsumListViewModel.picsums.observe(viewLifecycleOwner) {
-            Timber.d("picsum $it")
-            handleLoadingIndicator(it)
-            handleNonLoading(it)
-            if (it.status == Resource.Status.SUCCESS && it.data?.isNotEmpty() == true) {
-                picsumListAdapter.updateData(it.data!!)
-            }
+        binding.listRefresh.setOnRefreshListener { picsumListAdapter.refresh() }
+        binding.retryButton.setOnClickListener { picsumListAdapter.retry() }
+
+        binding.list.adapter = picsumListAdapter.withLoadStateHeaderAndFooter(
+            header = PicsumLoadStateAdapter { picsumListAdapter.retry() },
+            footer = PicsumLoadStateAdapter { picsumListAdapter.retry() }
+        )
+
+        picsumListAdapter.addLoadStateListener { loadState ->
+            val isListEmpty = loadState.refresh is LoadState.NotLoading && picsumListAdapter.itemCount == 0
+            showEmptyList(isListEmpty)
+
+            binding.listRefresh.isRefreshing = loadState.mediator?.refresh is LoadState.Loading
+            binding.list.isVisible = loadState.mediator?.refresh is LoadState.NotLoading
+            binding.progressBar.isVisible = loadState.mediator?.refresh is LoadState.Loading
+            binding.retryButton.isVisible = loadState.mediator?.refresh is LoadState.Error
+
+            val errorState = loadState.source.append as? LoadState.Error
+                ?: loadState.source.prepend as? LoadState.Error
+                ?: loadState.append as? LoadState.Error
+                ?: loadState.prepend as? LoadState.Error
+            errorState?.let { Toast.makeText(context, R.string.an_error_happened, Toast.LENGTH_LONG).show() }
         }
-        picsumListViewModel.getpicsums(false)
     }
 
-    private fun handleNonLoading(it: Resource<List<PicsumItem>>) {
-        if (it.status == Resource.Status.ERROR ||
-            (it.status == Resource.Status.SUCCESS && it.data?.isEmpty() == true)
-        ) {
-            binding.picsumListEmptyText.visibility = View.VISIBLE
+    private fun showEmptyList(show: Boolean) {
+        if (show) {
+            binding.emptyList.visibility = View.VISIBLE
+            binding.list.visibility = View.GONE
         } else {
-            binding.picsumListEmptyText.visibility = View.GONE
-        }
-    }
-
-    private fun handleLoadingIndicator(it: Resource<List<PicsumItem>>) {
-        when (it.status) {
-            Resource.Status.LOADING -> binding.picsumListRefresh.isRefreshing = true
-            else -> binding.picsumListRefresh.isRefreshing = false
+            binding.emptyList.visibility = View.GONE
+            binding.list.visibility = View.VISIBLE
         }
     }
 

@@ -1,16 +1,16 @@
 package hu.tvarga.list.domain
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
-import hu.tvarga.core.resource.Resource
+import androidx.paging.PagingData
 import hu.tvarga.listapi.PicsumRepository
-import hu.tvarga.model.PicsumItem
+import hu.tvarga.model.PicsumItemEntity
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class GetPicsumsUseCase @Inject constructor(private val repository: PicsumRepository) {
 
-    suspend operator fun invoke(forceRefresh: Boolean = false, page: Int = 1): LiveData<Resource<List<PicsumItem>>> {
-        return Transformations.map(repository.getPicsums(forceRefresh, page)) {
+    operator fun invoke(): Flow<PagingData<PicsumItemEntity>> {
+        return repository.getPicsums().map {
             it // Place here your specific logic actions
         }
     }

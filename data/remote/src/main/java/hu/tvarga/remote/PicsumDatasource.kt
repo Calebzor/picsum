@@ -4,5 +4,5 @@ import javax.inject.Inject
 
 class PicsumDatasource @Inject constructor(private val picsumService: PicsumService) {
 
-    fun fetchList(page: Int) = picsumService.fetchList(page)
+    suspend fun fetchList(page: Int, limit: Int) = picsumService.fetchList(page, limit)
 }
