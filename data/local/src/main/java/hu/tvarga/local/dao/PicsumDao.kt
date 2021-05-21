@@ -3,7 +3,7 @@ package hu.tvarga.local.dao
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
-import hu.tvarga.model.PicsumItemEntity
+import hu.tvarga.model.entity.PicsumItemEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

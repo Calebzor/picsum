@@ -4,7 +4,7 @@ import android.net.Uri
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import hu.tvarga.core.base.BaseViewModel
-import hu.tvarga.model.PicsumItem
+import hu.tvarga.model.dto.PicsumItem
 import hu.tvarga.picsum.detail.model.DetailUiModel
 import hu.tvarga.picsum.detail.model.ImageType
 import kotlinx.coroutines.ExperimentalCoroutinesApi

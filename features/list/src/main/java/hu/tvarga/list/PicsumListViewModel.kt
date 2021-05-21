@@ -8,7 +8,7 @@ import coil.load
 import dagger.hilt.android.lifecycle.HiltViewModel
 import hu.tvarga.core.base.BaseViewModel
 import hu.tvarga.list.domain.GetPicsumsUseCase
-import hu.tvarga.model.PicsumItem
+import hu.tvarga.model.dto.PicsumItem
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel
@@ -23,7 +23,6 @@ import javax.inject.Inject
 class PicsumListViewModel @Inject constructor(
     getPicsumsUseCase: GetPicsumsUseCase
 ) : BaseViewModel() {
-
 
     private val clearListChannel = Channel<Unit>(Channel.CONFLATED)
 

@@ -1,7 +1,7 @@
 package hu.tvarga.listapi
 
 import androidx.paging.PagingData
-import hu.tvarga.model.PicsumItemEntity
+import hu.tvarga.model.entity.PicsumItemEntity
 import kotlinx.coroutines.flow.Flow
 
 interface PicsumRepository {

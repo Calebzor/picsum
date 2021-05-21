@@ -6,7 +6,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import hu.tvarga.list.PicsumListViewModel
 import hu.tvarga.list.databinding.ItemPicsumBinding
-import hu.tvarga.model.PicsumItem
+import hu.tvarga.model.dto.PicsumItem
 
 class PicsumAdapter :
     PagingDataAdapter<PicsumItem, PicsumListViewHolder>(COMPARATOR) {

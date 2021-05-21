@@ -1,4 +1,4 @@
-package hu.tvarga.model
+package hu.tvarga.model.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

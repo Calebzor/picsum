@@ -1,6 +1,6 @@
 package hu.tvarga.remote
 
-import hu.tvarga.model.PicsumApiObject
+import hu.tvarga.model.api.PicsumApiObject
 import retrofit2.http.GET
 import retrofit2.http.Query
 

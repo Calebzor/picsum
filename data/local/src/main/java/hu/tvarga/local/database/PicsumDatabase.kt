@@ -6,10 +6,10 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import hu.tvarga.local.dao.PicsumDao
 import hu.tvarga.local.dao.RemoteKeysDao
-import hu.tvarga.model.PicsumItemEntity
-import hu.tvarga.model.RemoteKeys
+import hu.tvarga.model.entity.PicsumItemEntity
+import hu.tvarga.model.entity.RemoteKeysEntity
 
-@Database(entities = [PicsumItemEntity::class, RemoteKeys::class], version = 1, exportSchema = false)
+@Database(entities = [PicsumItemEntity::class, RemoteKeysEntity::class], version = 1, exportSchema = false)
 abstract class PicsumDatabase : RoomDatabase() {
 
     abstract fun picsumDao(): PicsumDao

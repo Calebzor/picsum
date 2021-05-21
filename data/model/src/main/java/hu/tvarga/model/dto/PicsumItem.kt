@@ -1,4 +1,4 @@
-package hu.tvarga.model
+package hu.tvarga.model.dto
 
 data class PicsumItem(
     val id: String,

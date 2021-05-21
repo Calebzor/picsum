@@ -3,6 +3,7 @@ apply from: rootProject.file('gradle/kotlinKapt.gradle')
 apply plugin: DI.daggerHiltGradlePlugin
 
 dependencies {
+    implementation project(":data:model")
     implementation DI.javaxInject
     implementation Kotlin.stdLib
     implementation Retrofit.core
@@ -10,7 +11,6 @@ dependencies {
     implementation Retrofit.moshi
     implementation Network.okhttp
     implementation Network.httpLoggingInterceptor
-    implementation project(":data:model")
     implementation DI.daggerHilt
     kapt DI.daggerHiltAnnotationProcessor
     testImplementation TestDependencies.junit

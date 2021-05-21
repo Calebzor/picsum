@@ -3,7 +3,7 @@ package hu.tvarga.list.view
 import androidx.recyclerview.widget.RecyclerView
 import hu.tvarga.list.PicsumListViewModel
 import hu.tvarga.list.databinding.ItemPicsumBinding
-import hu.tvarga.model.PicsumItem
+import hu.tvarga.model.dto.PicsumItem
 
 class PicsumListViewHolder(val binding: ItemPicsumBinding) : RecyclerView.ViewHolder(binding.root) {
 

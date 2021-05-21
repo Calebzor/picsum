@@ -2,6 +2,5 @@ apply from: rootProject.file('gradle/moduleFeature.gradle')
 
 dependencies {
     api project(':features:detailApi')
-    implementation project(':core')
     implementation Coil.coil
 }

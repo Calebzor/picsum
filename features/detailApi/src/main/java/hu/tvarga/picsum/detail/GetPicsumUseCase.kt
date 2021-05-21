@@ -1,7 +1,7 @@
 package hu.tvarga.picsum.detail
 
 import hu.tvarga.listapi.PicsumRepository
-import hu.tvarga.model.PicsumItem
+import hu.tvarga.model.dto.PicsumItem
 import hu.tvarga.model.toPicsumItem
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

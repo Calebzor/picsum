@@ -6,7 +6,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import hu.tvarga.listapi.PicsumRepository
 import hu.tvarga.local.database.PicsumDatabase
-import hu.tvarga.model.PicsumItemEntity
+import hu.tvarga.model.entity.PicsumItemEntity
 import hu.tvarga.remote.PicsumDatasource
 import kotlinx.coroutines.flow.Flow
 

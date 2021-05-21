@@ -1,4 +1,4 @@
-package hu.tvarga.model
+package hu.tvarga.model.api
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

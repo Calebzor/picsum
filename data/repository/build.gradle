@@ -7,11 +7,10 @@ dependencies {
     api project(path: ':data:model')
     api project(path: ':data:remote')
     api project(path: ':data:local')
+    api AndroidX.pagination
     implementation Retrofit.retrofitCoroutineAdapter
-    implementation AndroidX.lifecycleLivedataKtx
     implementation AndroidX.roomRuntime
     implementation AndroidX.roomKtx
-    implementation AndroidX.pagination
     implementation DI.daggerHilt
     kapt DI.daggerHiltAnnotationProcessor
     implementation Kotlin.stdLib

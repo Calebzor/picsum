@@ -6,9 +6,9 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import hu.tvarga.local.database.PicsumDatabase
-import hu.tvarga.model.PicsumApiObject
-import hu.tvarga.model.PicsumItemEntity
-import hu.tvarga.model.RemoteKeys
+import hu.tvarga.model.entity.PicsumItemEntity
+import hu.tvarga.model.entity.RemoteKeysEntity
+import hu.tvarga.model.toPicsumItemEntity
 import hu.tvarga.remote.PicsumDatasource
 import retrofit2.HttpException
 import java.io.IOException
@@ -72,7 +72,7 @@ class PicsumRemoteMediator @Inject constructor(
                 val prevKey = if (page == STARTING_PAGE_INDEX) null else page - 1
                 val nextKey = if (endOfPaginationReached) null else page + 1
                 val keys = repos.map {
-                    RemoteKeys(id = it.id, prevKey = prevKey, nextKey = nextKey)
+                    RemoteKeysEntity(id = it.id, prevKey = prevKey, nextKey = nextKey)
                 }
                 database.remoteKeysDao().insert(keys)
                 database.picsumDao().insert(repos)
@@ -85,7 +85,7 @@ class PicsumRemoteMediator @Inject constructor(
         }
     }
 
-    private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, PicsumItemEntity>): RemoteKeys? {
+    private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, PicsumItemEntity>): RemoteKeysEntity? {
         // Get the last page that was retrieved, that contained items.
         // From that last page, get the last item
         return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()
@@ -95,7 +95,7 @@ class PicsumRemoteMediator @Inject constructor(
             }
     }
 
-    private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, PicsumItemEntity>): RemoteKeys? {
+    private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, PicsumItemEntity>): RemoteKeysEntity? {
         // Get the first page that was retrieved, that contained items.
         // From that first page, get the first item
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()
@@ -105,28 +105,7 @@ class PicsumRemoteMediator @Inject constructor(
             }
     }
 
-    private suspend fun getRemoteKeyClosestToCurrentPosition(
-        state: PagingState<Int, PicsumItemEntity>
-    ): RemoteKeys? {
-        // The paging library is trying to load data after the anchor position
-        // Get the item closest to the anchor position
-        return state.anchorPosition?.let { position ->
-            state.closestItemToPosition(position)?.id?.let { repoId ->
-                database.remoteKeysDao().remoteKeysRepoId(repoId)
-            }
-        }
-    }
-
 }
 
-private fun PicsumApiObject.toPicsumItemEntity(): PicsumItemEntity =
-    PicsumItemEntity(
-        id = this.id,
-        author = this.author,
-        width = this.width,
-        height = this.height,
-        url = this.url,
-        downloadUrl = this.downloadUrl,
-    )
 
 

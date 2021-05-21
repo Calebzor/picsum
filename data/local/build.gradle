@@ -5,7 +5,6 @@ apply plugin: DI.daggerHiltGradlePlugin
 dependencies {
     implementation project(path: ':core')
     implementation project(path: ':data:model')
-    implementation AndroidX.lifecycleLivedataKtx
     implementation AndroidX.roomRuntime
     implementation AndroidX.roomKtx
     kapt AndroidX.roomCompiler

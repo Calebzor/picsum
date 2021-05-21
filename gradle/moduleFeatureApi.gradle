@@ -16,7 +16,6 @@ android {
 }
 
 dependencies {
-    implementation AndroidX.fragmentKtx
     implementation DI.javaxInject
     implementation Kotlin.stdLib
 }

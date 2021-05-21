@@ -6,27 +6,15 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import hu.tvarga.local.dao.PicsumDao
-import hu.tvarga.local.dao.RemoteKeysDao
 import hu.tvarga.local.database.PicsumDatabase
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DaoModule {
+object DatabaseModule {
 
     @Provides
     fun database(@ApplicationContext context: Context): PicsumDatabase {
         return PicsumDatabase.buildDatabase(context)
-    }
-
-    @Provides
-    fun picsumDao(picsumDatabase: PicsumDatabase): PicsumDao {
-        return picsumDatabase.picsumDao()
-    }
-
-    @Provides
-    fun remoteKeysDao(picsumDatabase: PicsumDatabase): RemoteKeysDao {
-        return picsumDatabase.remoteKeysDao()
     }
 
 }
