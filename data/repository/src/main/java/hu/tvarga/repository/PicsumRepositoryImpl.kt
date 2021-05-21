@@ -25,8 +25,12 @@ class PicsumRepositoryImpl(
                 database
             )
         ) {
-            database.picsumDao().getPicsumItemEntitys()
+            database.picsumDao().getPicsumItemEntities()
         }.flow
+    }
+
+    override fun getPicsum(id: String): Flow<PicsumItemEntity> {
+        return database.picsumDao().getPicsumItemEntity(id)
     }
 
     companion object {

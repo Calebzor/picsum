@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="DetailBody1" parent="@style/TextAppearance.MaterialComponents.Body1">
+        <item name="android:layout_margin">8dp</item>
+    </style>
+
+    <style name="SelectableText" parent="@style/TextAppearance.MaterialComponents.Body2">
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:textIsSelectable">true</item>
+    </style>
+
+</resources>

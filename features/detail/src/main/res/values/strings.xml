@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="author">Author %s</string>
+    <string name="id">ID %s</string>
+    <string name="size">Size %s</string>
+    <string name="url">URL %s</string>
+    <string name="downloadUrl">Download URL %s</string>
+    <string name="normal_button">Normal</string>
+    <string name="blur">Blur</string>
+    <string name="grey">grey</string>
+</resources>

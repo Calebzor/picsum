@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface PicsumRepository {
     fun getPicsums(): Flow<PagingData<PicsumItemEntity>>
+    fun getPicsum(id: String): Flow<PicsumItemEntity>
 }

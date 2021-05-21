@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.flattenMerge
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
-import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -26,16 +25,16 @@ class PicsumListViewModel @Inject constructor(
 ) : BaseViewModel() {
 
 
-    private val clearListCh = Channel<Unit>(Channel.CONFLATED)
+    private val clearListChannel = Channel<Unit>(Channel.CONFLATED)
 
     @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
     val picsums = flowOf(
-        clearListCh.receiveAsFlow().map { PagingData.empty() },
+        clearListChannel.receiveAsFlow().map { PagingData.empty() },
         getPicsumsUseCase().cachedIn(viewModelScope)
     ).flattenMerge(2)
 
     fun picsumListItemClick(id: String) {
-        Timber.d("picsumListItemClick")
+        navigate(ListFragmentDirections.actionListFragmentToDetailFragment(id))
     }
 
     fun getPicsumImage(imageView: AppCompatImageView, picsum: PicsumItem) {
