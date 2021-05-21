@@ -17,17 +17,16 @@ class PicsumRepositoryImpl(
 
     override fun getPicsums(): Flow<PagingData<PicsumItemEntity>> {
 
-        val pagingSourceFactory = { database.picsumDao().getPicsumItemEntitys() }
-
         @OptIn(ExperimentalPagingApi::class)
         return Pager(
             config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
             remoteMediator = PicsumRemoteMediator(
                 datasource,
                 database
-            ),
-            pagingSourceFactory = pagingSourceFactory
-        ).flow
+            )
+        ) {
+            database.picsumDao().getPicsumItemEntitys()
+        }.flow
     }
 
     companion object {

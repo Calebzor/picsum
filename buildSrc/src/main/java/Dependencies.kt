@@ -50,7 +50,6 @@ object AndroidX {
     val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     val pagination = "androidx.paging:paging-runtime-ktx:${Versions.page}"
 }
-
 object Coil {
     val coil = "io.coil-kt:coil:1.2.1"
 }

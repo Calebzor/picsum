@@ -17,7 +17,4 @@ abstract class PicsumDao : BaseDao<PicsumItemEntity>() {
     @Query("DELETE FROM picsums")
     abstract suspend fun clearRepos()
 
-    suspend fun save(picsumItemEntitys: List<PicsumItemEntity>) {
-        insert(picsumItemEntitys)
-    }
 }

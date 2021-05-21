@@ -9,7 +9,7 @@ interface PicsumService {
     //    https://picsum.photos/v2/list?page=2&limit=100
     @GET("list")
     suspend fun fetchList(
-        @Query("page") page: Int = 1, @Query("limit") limit: Int = 30
+        @Query("page") page: Int, @Query("limit") limit: Int
     ): List<PicsumApiObject>
 
 }

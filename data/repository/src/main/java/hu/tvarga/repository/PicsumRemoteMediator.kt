@@ -7,7 +7,6 @@ import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import hu.tvarga.local.database.PicsumDatabase
 import hu.tvarga.model.PicsumApiObject
-import hu.tvarga.model.PicsumItem
 import hu.tvarga.model.PicsumItemEntity
 import hu.tvarga.model.RemoteKeys
 import hu.tvarga.remote.PicsumDatasource
@@ -34,10 +33,7 @@ class PicsumRemoteMediator @Inject constructor(
     override suspend fun load(loadType: LoadType, state: PagingState<Int, PicsumItemEntity>): MediatorResult {
 
         val page = when (loadType) {
-            LoadType.REFRESH -> {
-                val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
-                remoteKeys?.nextKey?.minus(1) ?: STARTING_PAGE_INDEX
-            }
+            LoadType.REFRESH -> STARTING_PAGE_INDEX
             LoadType.PREPEND -> {
                 val remoteKeys = getRemoteKeyForFirstItem(state)
                 // If remoteKeys is null, that means the refresh result is not in the database yet.
@@ -45,10 +41,8 @@ class PicsumRemoteMediator @Inject constructor(
                 // will call this method again if RemoteKeys becomes non-null.
                 // If remoteKeys is NOT NULL but its prevKey is null, that means we've reached
                 // the end of pagination for prepend.
-                val prevKey = remoteKeys?.prevKey
-                if (prevKey == null) {
-                    return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
-                }
+                val prevKey =
+                    remoteKeys?.prevKey ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
                 prevKey
             }
             LoadType.APPEND -> {
@@ -58,10 +52,8 @@ class PicsumRemoteMediator @Inject constructor(
                 // will call this method again if RemoteKeys becomes non-null.
                 // If remoteKeys is NOT NULL but its prevKey is null, that means we've reached
                 // the end of pagination for append.
-                val nextKey = remoteKeys?.nextKey
-                if (nextKey == null) {
-                    return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
-                }
+                val nextKey =
+                    remoteKeys?.nextKey ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
                 nextKey
             }
         }
@@ -96,7 +88,7 @@ class PicsumRemoteMediator @Inject constructor(
     private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, PicsumItemEntity>): RemoteKeys? {
         // Get the last page that was retrieved, that contained items.
         // From that last page, get the last item
-        return state.pages.lastOrNull() { it.data.isNotEmpty() }?.data?.lastOrNull()
+        return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()
             ?.let { repo ->
                 // Get the remote keys of the last item retrieved
                 database.remoteKeysDao().remoteKeysRepoId(repo.id)
@@ -127,27 +119,7 @@ class PicsumRemoteMediator @Inject constructor(
 
 }
 
-private fun PicsumApiObject.toPicsum(): PicsumItem =
-    PicsumItem(
-        id = this.id,
-        author = this.author,
-        width = this.width,
-        height = this.height,
-        url = this.url,
-        downloadUrl = this.downloadUrl,
-    )
-
 private fun PicsumApiObject.toPicsumItemEntity(): PicsumItemEntity =
-    PicsumItemEntity(
-        id = this.id,
-        author = this.author,
-        width = this.width,
-        height = this.height,
-        url = this.url,
-        downloadUrl = this.downloadUrl,
-    )
-
-private fun PicsumItem.toPicsumItemEntity(): PicsumItemEntity =
     PicsumItemEntity(
         id = this.id,
         author = this.author,
