@@ -20,7 +20,7 @@ object Versions {
     val androidXRoomVersion = "2.3.0"
     val autoDisposeVersion = "1.0.0"
     val moshiVersion = "1.12.0"
-    val okhttpVersion = "4.9.0"
+    val okhttpVersion = "4.9.1"
     val retrofit = "2.9.0"
     val retrofitCoroutines = "0.9.2"
     val nav = "2.3.5"

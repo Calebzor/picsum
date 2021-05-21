@@ -4,13 +4,11 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import androidx.paging.map
 import coil.load
 import dagger.hilt.android.lifecycle.HiltViewModel
 import hu.tvarga.core.base.BaseViewModel
 import hu.tvarga.list.domain.GetPicsumsUseCase
 import hu.tvarga.model.PicsumItem
-import hu.tvarga.model.PicsumItemEntity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel
@@ -33,7 +31,7 @@ class PicsumListViewModel @Inject constructor(
     @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
     val picsums = flowOf(
         clearListCh.receiveAsFlow().map { PagingData.empty() },
-        getPicsumsUseCase().map { pagingData -> pagingData.map { it.toPicsumItem() } }.cachedIn(viewModelScope)
+        getPicsumsUseCase().cachedIn(viewModelScope)
     ).flattenMerge(2)
 
     fun picsumListItemClick(id: String) {
@@ -55,13 +53,3 @@ class PicsumListViewModel @Inject constructor(
         const val IMAGE_WIDTH = 1280
     }
 }
-
-private fun PicsumItemEntity.toPicsumItem(): PicsumItem =
-    PicsumItem(
-        id = this.id,
-        author = this.author,
-        width = this.width,
-        height = this.height,
-        url = this.url,
-        downloadUrl = this.downloadUrl,
-    )

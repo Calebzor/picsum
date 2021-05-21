@@ -3,4 +3,8 @@ apply from: rootProject.file("gradle/moduleBase.gradle")
 
 android {
     buildFeatures.viewBinding true
+    kotlinOptions {
+        jvmTarget = "1.8"
+        freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
+    }
 }

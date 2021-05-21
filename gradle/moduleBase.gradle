@@ -54,8 +54,3 @@ dependencies {
     implementation LoggerFramework.timber
 
 }
-
-configurations {
-    // We include the jdk variant, so the deprecated jrre variant can be excluded.
-    implementation.exclude module: 'kotlin-stdlib-jre7'
-}
