@@ -73,9 +73,9 @@ class PicsumRemoteMediator @Inject constructor(
         // Get the last page that was retrieved, that contained items.
         // From that last page, get the last item
         return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()
-            ?.let { picusm ->
+            ?.let { picsum ->
                 // Get the remote keys of the last item retrieved
-                database.remoteKeysDao().remoteKeysPicsumId(picusm.id)
+                database.remoteKeysDao().remoteKeysPicsumId(picsum.id)
             }
     }
 

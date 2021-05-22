@@ -37,7 +37,6 @@ class DetailFragment : BaseFragment(R.layout.detail_fragment) {
         binding.blur.setOnClickListener { picsumDetailViewModel.setImageType(ImageType.BLUR) }
         binding.grey.setOnClickListener { picsumDetailViewModel.setImageType(ImageType.GREY) }
         binding.normal.setOnClickListener { picsumDetailViewModel.setImageType(ImageType.NORMAL) }
-        picsumDetailViewModel.setImageType(ImageType.NORMAL)
         lifecycleScope.launchWhenCreated {
             picsumDetailViewModel.picsums(args.id).collectLatest {
                 binding.author.text = getString(R.string.author, it.author)

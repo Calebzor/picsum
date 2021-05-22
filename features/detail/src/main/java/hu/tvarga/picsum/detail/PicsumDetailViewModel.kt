@@ -9,9 +9,8 @@ import hu.tvarga.picsum.detail.model.DetailUiModel
 import hu.tvarga.picsum.detail.model.ImageType
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,10 +18,10 @@ import javax.inject.Inject
 @HiltViewModel
 class PicsumDetailViewModel @Inject constructor(private val getPicsumUseCase: GetPicsumUseCase) : BaseViewModel() {
 
-    private val imageTypeChannel = Channel<ImageType>()
+    private val imageTypeState = MutableStateFlow(ImageType.NORMAL)
 
     @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
-    fun picsums(id: String) = getPicsumUseCase(id).combine(imageTypeChannel.receiveAsFlow()) { picsum, imageType ->
+    fun picsums(id: String) = getPicsumUseCase(id).combine(imageTypeState) { picsum, imageType ->
         detailUiModel(picsum, imageType)
     }
 
@@ -50,7 +49,8 @@ class PicsumDetailViewModel @Inject constructor(private val getPicsumUseCase: Ge
 
     fun setImageType(imageType: ImageType) {
         viewModelScope.launch {
-            imageTypeChannel.send(imageType)
+            val current = imageTypeState.value
+            imageTypeState.compareAndSet(current, imageType)
         }
     }
 }
