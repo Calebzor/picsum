@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
-import coil.load
+import com.bumptech.glide.Glide
 import hu.tvarga.core.base.BaseFragment
 import hu.tvarga.core.base.BaseViewModel
 import hu.tvarga.detail.R
@@ -45,9 +45,8 @@ class DetailFragment : BaseFragment(R.layout.detail_fragment) {
                 binding.size.text = getString(R.string.size, it.size)
                 binding.url.text = getString(R.string.url, it.url)
                 binding.downloadUrl.text = getString(R.string.downloadUrl, it.downloadUrl)
-                binding.image.load(it.downloadUrl) {
-                    placeholder(android.R.drawable.ic_menu_report_image)
-                }
+                Glide.with(binding.image).load(it.downloadUrl).placeholder(android.R.drawable.ic_menu_report_image)
+                    .into(binding.image)
                 binding.imageButtons.check(it.selected)
             }
         }

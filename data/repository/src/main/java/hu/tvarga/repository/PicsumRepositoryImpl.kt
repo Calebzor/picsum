@@ -19,7 +19,7 @@ class PicsumRepositoryImpl(
 
         @OptIn(ExperimentalPagingApi::class)
         return Pager(
-            config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
+            config = PagingConfig(NETWORK_PAGE_SIZE),
             remoteMediator = PicsumRemoteMediator(
                 datasource,
                 database

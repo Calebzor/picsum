@@ -24,7 +24,7 @@ import hu.tvarga.model.entity.RemoteKeysEntity
 abstract class RemoteKeysDao : BaseDao<RemoteKeysEntity>() {
 
     @Query("SELECT * FROM remote_keys WHERE id = :id")
-    abstract suspend fun remoteKeysRepoId(id: String): RemoteKeysEntity?
+    abstract suspend fun remoteKeysPicsumId(id: String): RemoteKeysEntity?
 
     @Query("DELETE FROM remote_keys")
     abstract suspend fun clearRemoteKeys()

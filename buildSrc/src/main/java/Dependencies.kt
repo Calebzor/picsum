@@ -18,7 +18,6 @@ object Versions {
     val androidXLifecycleVersion = "2.4.0-alpha01"
     val androidxFragmentVersion = "1.3.3"
     val androidXRoomVersion = "2.3.0"
-    val autoDisposeVersion = "1.0.0"
     val moshiVersion = "1.12.0"
     val okhttpVersion = "4.9.1"
     val retrofit = "2.9.0"
@@ -47,8 +46,9 @@ object AndroidX {
     val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     val pagination = "androidx.paging:paging-runtime-ktx:${Versions.page}"
 }
-object Coil {
-    val coil = "io.coil-kt:coil:1.2.1"
+
+object Glide {
+    val glide = "com.github.bumptech.glide:glide:4.12.0"
 }
 
 object Google {
@@ -67,16 +67,6 @@ object DI {
     val javaxInject = "javax.inject:javax.inject:1"
 }
 
-object AutoDispose {
-    val base = "com.uber.autodispose:autodispose-ktx:${Versions.autoDisposeVersion}"
-    val androidKtx = "com.uber.autodispose:autodispose-android-ktx:${Versions.autoDisposeVersion}"
-    val lifecycleKtx = "com.uber.autodispose:autodispose-lifecycle-ktx:${Versions.autoDisposeVersion}"
-    val arch = "com.uber.autodispose:autodispose-android-archcomponents:${Versions.autoDisposeVersion}"
-    val archKtx = "com.uber.autodispose:autodispose-android-archcomponents-ktx:${Versions.autoDisposeVersion}"
-    val lifecycleTest =
-        "com.uber.autodispose:autodispose-android-archcomponents-test-ktx:${Versions.autoDisposeVersion}"
-}
-
 object Moshi {
     val core = "com.squareup.moshi:moshi:${Versions.moshiVersion}"
     val codegen = "com.squareup.moshi:moshi-kotlin-codegen:${Versions.moshiVersion}"
@@ -89,12 +79,6 @@ object LoggerFramework {
 object Network {
     val okhttp = "com.squareup.okhttp3:okhttp:${Versions.okhttpVersion}"
     val httpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttpVersion}"
-}
-
-object Rx {
-    val kotlin = "io.reactivex.rxjava2:rxkotlin:2.4.0"
-    val java = "io.reactivex.rxjava2:rxjava:2.2.19"
-    val android = "io.reactivex.rxjava2:rxandroid:2.0.1"
 }
 
 object Retrofit {

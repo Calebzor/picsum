@@ -2,5 +2,5 @@ apply from: rootProject.file('gradle/moduleFeature.gradle')
 
 dependencies {
     api project(':features:detailApi')
-    implementation Coil.coil
+    implementation Glide.glide
 }

@@ -16,6 +16,6 @@ abstract class PicsumDao : BaseDao<PicsumItemEntity>() {
     abstract fun getPicsumItemEntity(id: String): Flow<PicsumItemEntity>
 
     @Query("DELETE FROM picsums")
-    abstract suspend fun clearRepos()
+    abstract suspend fun clear()
 
 }

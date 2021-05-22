@@ -5,7 +5,7 @@ import hu.tvarga.list.PicsumListViewModel
 import hu.tvarga.list.databinding.ItemPicsumBinding
 import hu.tvarga.model.dto.PicsumItem
 
-class PicsumListViewHolder(val binding: ItemPicsumBinding) : RecyclerView.ViewHolder(binding.root) {
+class PicsumListViewHolder(private val binding: ItemPicsumBinding) : RecyclerView.ViewHolder(binding.root) {
 
     fun bindTo(picsum: PicsumItem?, viewModel: PicsumListViewModel?) {
         picsum?.let {

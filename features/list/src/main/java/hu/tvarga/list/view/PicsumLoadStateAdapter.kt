@@ -7,7 +7,7 @@ import androidx.paging.LoadStateAdapter
 import hu.tvarga.list.databinding.PicsumLoadStateFooterViewItemBinding
 
 class PicsumLoadStateAdapter(
-    private val retry: () -> Unit
+    private val adapter: PicsumAdapter
 ) : LoadStateAdapter<PicsumLoadStateViewHolder>() {
     override fun onBindViewHolder(holder: PicsumLoadStateViewHolder, loadState: LoadState) {
         holder.bind(loadState)
@@ -19,7 +19,9 @@ class PicsumLoadStateAdapter(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            ), retry
-        )
+            )
+        ) {
+            adapter.retry()
+        }
     }
 }

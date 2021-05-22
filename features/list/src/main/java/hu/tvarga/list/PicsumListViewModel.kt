@@ -1,21 +1,19 @@
 package hu.tvarga.list
 
+import android.R
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import coil.load
+import com.bumptech.glide.Glide
 import dagger.hilt.android.lifecycle.HiltViewModel
 import hu.tvarga.core.base.BaseViewModel
 import hu.tvarga.list.domain.GetPicsumsUseCase
 import hu.tvarga.model.dto.PicsumItem
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.flattenMerge
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.receiveAsFlow
 import javax.inject.Inject
 
 
@@ -24,13 +22,11 @@ class PicsumListViewModel @Inject constructor(
     getPicsumsUseCase: GetPicsumsUseCase
 ) : BaseViewModel() {
 
-    private val clearListChannel = Channel<Unit>(Channel.CONFLATED)
-
     @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
     val picsums = flowOf(
-        clearListChannel.receiveAsFlow().map { PagingData.empty() },
+        flowOf(PagingData.empty()),
         getPicsumsUseCase().cachedIn(viewModelScope)
-    ).flattenMerge(2)
+    ).flattenMerge()
 
     fun picsumListItemClick(id: String) {
         navigate(ListFragmentDirections.actionListFragmentToDetailFragment(id))
@@ -38,10 +34,9 @@ class PicsumListViewModel @Inject constructor(
 
     fun getPicsumImage(imageView: AppCompatImageView, picsum: PicsumItem) {
         val url = picsumImageUrlWithSize(picsum)
-        imageView.load(url) {
-            size(IMAGE_WIDTH, IMAGE_WIDTH)
-            placeholder(android.R.drawable.ic_menu_report_image)
-        }
+        Glide.with(imageView)
+            .load(url)
+            .placeholder(R.drawable.ic_menu_report_image).into(imageView)
     }
 
     private fun picsumImageUrlWithSize(picsum: PicsumItem) =

@@ -31,51 +31,35 @@ class PicsumRemoteMediator @Inject constructor(
     }
 
     override suspend fun load(loadType: LoadType, state: PagingState<Int, PicsumItemEntity>): MediatorResult {
-
-        val page = when (loadType) {
-            LoadType.REFRESH -> STARTING_PAGE_INDEX
-            LoadType.PREPEND -> {
-                val remoteKeys = getRemoteKeyForFirstItem(state)
-                // If remoteKeys is null, that means the refresh result is not in the database yet.
-                // We can return Success with `endOfPaginationReached = false` because Paging
-                // will call this method again if RemoteKeys becomes non-null.
-                // If remoteKeys is NOT NULL but its prevKey is null, that means we've reached
-                // the end of pagination for prepend.
-                val prevKey =
-                    remoteKeys?.prevKey ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
-                prevKey
-            }
-            LoadType.APPEND -> {
-                val remoteKeys = getRemoteKeyForLastItem(state)
-                // If remoteKeys is null, that means the refresh result is not in the database yet.
-                // We can return Success with `endOfPaginationReached = false` because Paging
-                // will call this method again if RemoteKeys becomes non-null.
-                // If remoteKeys is NOT NULL but its prevKey is null, that means we've reached
-                // the end of pagination for append.
-                val nextKey =
-                    remoteKeys?.nextKey ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
-                nextKey
-            }
-        }
-
         try {
+            val page = when (loadType) {
+                LoadType.REFRESH -> STARTING_PAGE_INDEX
+                LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
+                LoadType.APPEND -> {
+                    val remoteKeys = getRemoteKeyForLastItem(state)
+                    val nextKey =
+                        remoteKeys?.nextKey
+                            ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
+                    nextKey
+                }
+            }
+
             val apiResponse = datasource.fetchList(page, state.config.pageSize)
 
-            val repos: List<PicsumItemEntity> = apiResponse.map { it.toPicsumItemEntity() }
-            val endOfPaginationReached = repos.isEmpty()
+            val picsums: List<PicsumItemEntity> = apiResponse.map { it.toPicsumItemEntity() }
+            val endOfPaginationReached = picsums.isEmpty()
             database.withTransaction {
                 // clear all tables in the database
                 if (loadType == LoadType.REFRESH) {
+                    database.picsumDao().clear()
                     database.remoteKeysDao().clearRemoteKeys()
-                    database.picsumDao().clearRepos()
                 }
-                val prevKey = if (page == STARTING_PAGE_INDEX) null else page - 1
-                val nextKey = if (endOfPaginationReached) null else page + 1
-                val keys = repos.map {
-                    RemoteKeysEntity(id = it.id, prevKey = prevKey, nextKey = nextKey)
+                val nextKey = page + 1
+                val keys = picsums.map {
+                    RemoteKeysEntity(id = it.id, nextKey = nextKey)
                 }
                 database.remoteKeysDao().insert(keys)
-                database.picsumDao().insert(repos)
+                database.picsumDao().insert(picsums)
             }
             return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
         } catch (exception: IOException) {
@@ -89,19 +73,9 @@ class PicsumRemoteMediator @Inject constructor(
         // Get the last page that was retrieved, that contained items.
         // From that last page, get the last item
         return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()
-            ?.let { repo ->
+            ?.let { picusm ->
                 // Get the remote keys of the last item retrieved
-                database.remoteKeysDao().remoteKeysRepoId(repo.id)
-            }
-    }
-
-    private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, PicsumItemEntity>): RemoteKeysEntity? {
-        // Get the first page that was retrieved, that contained items.
-        // From that first page, get the first item
-        return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()
-            ?.let { repo ->
-                // Get the remote keys of the first items retrieved
-                database.remoteKeysDao().remoteKeysRepoId(repo.id)
+                database.remoteKeysDao().remoteKeysPicsumId(picusm.id)
             }
     }
 

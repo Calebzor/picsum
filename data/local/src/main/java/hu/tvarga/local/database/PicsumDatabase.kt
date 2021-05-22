@@ -18,6 +18,7 @@ abstract class PicsumDatabase : RoomDatabase() {
     companion object {
 
         fun buildDatabase(context: Context) =
-            Room.databaseBuilder(context.applicationContext, PicsumDatabase::class.java, "PicsumApp.db").build()
+            Room.databaseBuilder(context, PicsumDatabase::class.java, "PicsumApp.db")
+                .fallbackToDestructiveMigration().build()
     }
 }

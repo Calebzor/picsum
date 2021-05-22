@@ -5,6 +5,6 @@ dependencies {
     api project(':features:listApi')
 
     implementation AndroidX.swipeRefreshLayout
-    implementation Coil.coil
+    implementation Glide.glide
 }
 

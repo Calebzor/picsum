@@ -45,8 +45,8 @@ class ListFragment : BaseFragment(R.layout.list_fragment) {
         adapter = PicsumAdapter()
         adapter.viewModelPicsum = getViewModel()
         binding.list.adapter = adapter.withLoadStateHeaderAndFooter(
-            header = PicsumLoadStateAdapter { adapter.retry() },
-            footer = PicsumLoadStateAdapter { adapter.retry() }
+            header = PicsumLoadStateAdapter(adapter),
+            footer = PicsumLoadStateAdapter(adapter)
         )
         val numberOfColumns = 2
         binding.list.layoutManager = GridLayoutManager(context, numberOfColumns)
@@ -56,21 +56,13 @@ class ListFragment : BaseFragment(R.layout.list_fragment) {
         lifecycleScope.launchWhenCreated {
             adapter.loadStateFlow.collectLatest { loadState ->
                 val itemCount = adapter.itemCount
-                val isListEmpty = loadState.refresh is LoadState.NotLoading && itemCount == 0
-                showEmptyList(isListEmpty)
+                val isListEmpty =
+                    (loadState.refresh is LoadState.NotLoading || loadState.refresh is LoadState.Error) && itemCount == 0
+                binding.emptyList.isVisible = isListEmpty
 
                 binding.listRefresh.isRefreshing = loadState.refresh is LoadState.Loading
-                binding.list.isVisible = loadState.refresh is LoadState.NotLoading
-                binding.progressBar.isVisible = loadState.refresh is LoadState.Loading
-                binding.retryButton.isVisible = loadState.refresh is LoadState.Error
 
                 handleErrorState(loadState)
-            }
-        }
-
-        lifecycleScope.launchWhenCreated {
-            picsumListViewModel.picsums.collectLatest {
-                adapter.submitData(it)
             }
         }
 
@@ -79,6 +71,12 @@ class ListFragment : BaseFragment(R.layout.list_fragment) {
                 .distinctUntilChangedBy { it.refresh }
                 .filter { it.refresh is LoadState.NotLoading }
                 .collect { binding.list.scrollToPosition(0) }
+        }
+
+        lifecycleScope.launchWhenCreated {
+            picsumListViewModel.picsums.collectLatest {
+                adapter.submitData(it)
+            }
         }
     }
 
@@ -92,17 +90,6 @@ class ListFragment : BaseFragment(R.layout.list_fragment) {
 
     private fun setAdapterListeners() {
         binding.listRefresh.setOnRefreshListener { adapter.refresh() }
-        binding.retryButton.setOnClickListener { adapter.retry() }
-    }
-
-    private fun showEmptyList(show: Boolean) {
-        if (show) {
-            binding.emptyList.visibility = View.VISIBLE
-            binding.list.visibility = View.GONE
-        } else {
-            binding.emptyList.visibility = View.GONE
-            binding.list.visibility = View.VISIBLE
-        }
     }
 
     override fun getViewModel() = picsumListViewModel
