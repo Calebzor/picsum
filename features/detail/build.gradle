@@ -1,6 +1,16 @@
 apply from: rootProject.file('gradle/moduleFeature.gradle')
 
+android {
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+}
+
 dependencies {
     api project(':features:detailApi')
     implementation Glide.glide
+    testImplementation TestDependencies.robo
+    testImplementation TestDependencies.coroutines
 }

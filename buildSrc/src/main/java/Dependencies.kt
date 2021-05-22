@@ -20,6 +20,7 @@ object Versions {
     val okhttpVersion = "4.9.1"
     val retrofit = "2.9.0"
     val nav = "2.3.5"
+    val archCore = "2.1.0"
 }
 
 object Kotlin {
@@ -54,7 +55,7 @@ object DI {
     val daggerAndroidAnnotationProcessor = "com.google.dagger:dagger-android-processor:${Versions.dagger}"
     val daggerAnnotationProcessor = "com.google.dagger:dagger-compiler:${Versions.dagger}"
     val daggerHilt = "com.google.dagger:hilt-android:${Versions.hilt}"
-    val daggerHiltAnnotationProcessor = "com.google.dagger:hilt-compiler:${Versions.hilt}"
+    val daggerHiltAnnotationProcessor = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
     val daggerHiltGradlePluginClasspath = "com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt}"
     val daggerHiltGradlePlugin = "dagger.hilt.android.plugin"
     val daggerHiltTesting = "com.google.dagger:hilt-android-testing:${Versions.hilt}"
@@ -86,4 +87,8 @@ object TestDependencies {
     val junit = "junit:junit:4.13.2"
     val junitExt = "androidx.test.ext:junit:1.1.2"
     val espressoCore = "androidx.test.espresso:espresso-core:3.3.0"
+    val core = "androidx.arch.core:core-testing:${Versions.archCore}"
+    val mockitoKotlin = "org.mockito.kotlin:mockito-kotlin:3.2.0"
+    val robo = "org.robolectric:robolectric:4.4"
+    val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.kotlin}"
 }

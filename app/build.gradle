@@ -5,6 +5,7 @@ android {
 
     defaultConfig {
         applicationId "hu.tvarga.picsum"
+        testInstrumentationRunner = "hu.tvarga.picsum.PicsumTestInstrumentationRunner"
     }
 
     buildTypes {

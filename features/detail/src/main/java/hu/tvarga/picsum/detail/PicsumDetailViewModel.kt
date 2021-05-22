@@ -47,11 +47,10 @@ class PicsumDetailViewModel @Inject constructor(private val getPicsumUseCase: Ge
         return downloadUriBuilder.build().toString()
     }
 
-    fun setImageType(imageType: ImageType) {
+    fun setImageType(imageType: ImageType) =
         viewModelScope.launch {
             val current = imageTypeState.value
             imageTypeState.compareAndSet(current, imageType)
         }
-    }
 }
 

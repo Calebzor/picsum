@@ -11,7 +11,7 @@ import hu.tvarga.repository.PicsumRepositoryImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
-object ListModule {
+object RepositoryModule {
 
     @Provides
     fun listRepository(datasource: PicsumDatasource, database: PicsumDatabase): PicsumRepository {

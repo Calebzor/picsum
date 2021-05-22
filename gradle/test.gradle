@@ -2,4 +2,8 @@ dependencies {
     testImplementation TestDependencies.junit
     androidTestImplementation TestDependencies.junitExt
     androidTestImplementation TestDependencies.espressoCore
+    androidTestImplementation DI.daggerHiltTesting
+    androidTestImplementation TestDependencies.core
+    kaptAndroidTest DI.daggerHiltAnnotationProcessor
+    testImplementation TestDependencies.mockitoKotlin
 }
