@@ -52,7 +52,7 @@
 
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/author"
             style="@style/TextAppearance.MaterialComponents.Headline5"
             android:layout_width="match_parent"
@@ -62,7 +62,7 @@
             app:layout_constraintTop_toBottomOf="@id/imageButtons"
             tools:text="Author" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/id"
             style="@style/DetailBody1"
             android:layout_width="wrap_content"
@@ -71,7 +71,7 @@
             app:layout_constraintTop_toBottomOf="@id/author"
             tools:text="id" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/size"
             style="@style/DetailBody1"
             android:layout_width="wrap_content"
@@ -80,7 +80,7 @@
             app:layout_constraintTop_toBottomOf="@id/id"
             tools:text="size" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/url"
             style="@style/SelectableText"
             android:layout_width="wrap_content"
@@ -89,7 +89,7 @@
             app:layout_constraintTop_toBottomOf="@id/size"
             tools:text="url" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/downloadUrl"
             style="@style/SelectableText"
             android:layout_width="wrap_content"

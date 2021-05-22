@@ -15,15 +15,11 @@ object Versions {
 
     val dagger = "2.35.1"
     val hilt = "2.35"
-    val androidXLifecycleVersion = "2.4.0-alpha01"
-    val androidxFragmentVersion = "1.3.3"
     val androidXRoomVersion = "2.3.0"
     val moshiVersion = "1.12.0"
     val okhttpVersion = "4.9.1"
     val retrofit = "2.9.0"
-    val retrofitCoroutines = "0.9.2"
     val nav = "2.3.5"
-    val page = "3.0.0"
 }
 
 object Kotlin {
@@ -34,17 +30,15 @@ object AndroidX {
     val appCompat = "androidx.appcompat:appcompat:1.3.0-rc01"
     val constraintLayout = "androidx.constraintlayout:constraintlayout:2.0.4"
     val coreKtx = "androidx.core:core-ktx:1.5.0-rc02"
-    val fragmentKtx = "androidx.fragment:fragment-ktx:${Versions.androidxFragmentVersion}"
+    val fragmentKtx = "androidx.fragment:fragment-ktx:1.3.3"
     val recyclerView = "androidx.recyclerview:recyclerview:1.2.0"
-    val lifecycleRuntimeKtx = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.androidXLifecycleVersion}"
-    val lifecycleCompiler = "androidx.lifecycle:lifecycle-compiler:${Versions.androidXLifecycleVersion}"
     val roomCompiler = "androidx.room:room-compiler:${Versions.androidXRoomVersion}"
     val roomKtx = "androidx.room:room-ktx:${Versions.androidXRoomVersion}"
     val roomRuntime = "androidx.room:room-runtime:${Versions.androidXRoomVersion}"
     val navigationFragmentKtx = "androidx.navigation:navigation-fragment-ktx:${Versions.nav}"
     val navigationUIKtx = "androidx.navigation:navigation-ui-ktx:${Versions.nav}"
     val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
-    val pagination = "androidx.paging:paging-runtime-ktx:${Versions.page}"
+    val pagination = "androidx.paging:paging-runtime-ktx:3.0.0"
 }
 
 object Glide {
@@ -85,7 +79,7 @@ object Retrofit {
     val core = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
     val moshi = "com.squareup.retrofit2:converter-moshi:${Versions.retrofit}"
     val retrofitCoroutineAdapter =
-        "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:${Versions.retrofitCoroutines}"
+        "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
 }
 
 object TestDependencies {

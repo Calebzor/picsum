@@ -1,5 +1,4 @@
-apply from: rootProject.file('gradle/moduleFeatureApi.gradle')
-apply from: rootProject.file('gradle/kotlinKapt.gradle')
+apply from: rootProject.file('gradle/dataBase.gradle')
 apply plugin: DI.daggerHiltGradlePlugin
 
 dependencies {

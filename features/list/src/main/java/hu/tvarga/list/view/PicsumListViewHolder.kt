@@ -10,7 +10,7 @@ class PicsumListViewHolder(private val binding: ItemPicsumBinding) : RecyclerVie
     fun bindTo(picsum: PicsumItem?, viewModel: PicsumListViewModel?) {
         picsum?.let {
             viewModel?.getPicsumImage(binding.image, picsum)
-            binding.root.setOnClickListener { viewModel?.picsumListItemClick(picsum.id) }
+            binding.image.setOnClickListener { viewModel?.picsumListItemClick(picsum.id) }
         }
     }
 }

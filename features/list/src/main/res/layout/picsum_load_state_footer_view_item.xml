@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="8dp">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/error_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,9 +24,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/retry_button"
-        style="@style/Widget.MaterialComponents.Button"
+        style="?attr/materialButtonOutlinedStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

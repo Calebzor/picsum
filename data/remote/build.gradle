@@ -1,11 +1,8 @@
-apply from: rootProject.file('gradle/moduleFeatureApi.gradle')
-apply from: rootProject.file('gradle/kotlinKapt.gradle')
+apply from: rootProject.file('gradle/dataBase.gradle')
 apply plugin: DI.daggerHiltGradlePlugin
 
 dependencies {
     implementation project(":data:model")
-    implementation DI.javaxInject
-    implementation Kotlin.stdLib
     implementation Retrofit.core
     implementation Retrofit.retrofitCoroutineAdapter
     implementation Retrofit.moshi
@@ -13,6 +10,4 @@ dependencies {
     implementation Network.httpLoggingInterceptor
     implementation DI.daggerHilt
     kapt DI.daggerHiltAnnotationProcessor
-    testImplementation TestDependencies.junit
-    testImplementation TestDependencies.junitExt
 }

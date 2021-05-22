@@ -5,6 +5,7 @@ dependencies {
     api project(':features:listApi')
 
     implementation AndroidX.swipeRefreshLayout
+    implementation AndroidX.recyclerView
     implementation Glide.glide
 }
 

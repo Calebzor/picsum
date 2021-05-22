@@ -1,18 +1,5 @@
 apply from: rootProject.file('gradle/moduleFeatureApi.gradle')
 apply from: rootProject.file('gradle/kotlinKapt.gradle')
+apply from: rootProject.file('gradle/repository.gradle')
 apply plugin: DI.daggerHiltGradlePlugin
 
-dependencies {
-    api project(path: ':core')
-    api project(path: ':data:model')
-    api project(path: ':data:remote')
-    api project(path: ':data:local')
-    api AndroidX.pagination
-    implementation Retrofit.retrofitCoroutineAdapter
-    implementation AndroidX.roomRuntime
-    implementation AndroidX.roomKtx
-    implementation DI.daggerHilt
-    kapt DI.daggerHiltAnnotationProcessor
-    implementation Kotlin.stdLib
-    implementation LoggerFramework.timber
-}

@@ -19,8 +19,9 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/emptyList"
+        style="@style/TextAppearance.MaterialComponents.Headline1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"

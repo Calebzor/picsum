@@ -1,0 +1,3 @@
+apply from: rootProject.file("gradle/moduleBase.gradle")
+apply from: rootProject.file("gradle/repository.gradle")
+

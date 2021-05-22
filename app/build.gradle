@@ -1,15 +1,10 @@
 apply plugin: 'com.android.application'
-apply from: rootProject.file("gradle/moduleBase.gradle")
-apply plugin: DI.daggerHiltGradlePlugin
+apply from: rootProject.file("gradle/appBase.gradle")
 
 android {
 
     defaultConfig {
         applicationId "hu.tvarga.picsum"
-        multiDexEnabled true
-    }
-    testOptions {
-        unitTests.returnDefaultValues = true
     }
 
     buildTypes {

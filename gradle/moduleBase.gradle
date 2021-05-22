@@ -1,5 +1,6 @@
 apply plugin: 'kotlin-android'
 apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: DI.daggerHiltGradlePlugin
 apply from: rootProject.file('gradle/kotlinKapt.gradle')
 apply from: rootProject.file('gradle/sdkVersions.gradle')
 apply from: rootProject.file("gradle/defaultConfig.gradle")
@@ -24,12 +25,9 @@ dependencies {
     implementation AndroidX.constraintLayout
     implementation AndroidX.coreKtx
     implementation AndroidX.fragmentKtx
-    implementation AndroidX.recyclerView
-    implementation AndroidX.lifecycleRuntimeKtx
     implementation AndroidX.roomRuntime
     implementation AndroidX.navigationFragmentKtx
     implementation AndroidX.navigationUIKtx
-    kapt AndroidX.lifecycleCompiler
 
     implementation Google.material
 
@@ -41,12 +39,8 @@ dependencies {
     }
     kapt DI.daggerAnnotationProcessor
     kapt DI.daggerAndroidAnnotationProcessor
-    implementation(DI.daggerHilt) {
-        exclude group: 'javax.annotation'
-    }
+    implementation DI.daggerHilt
     kapt DI.daggerHiltAnnotationProcessor
-
-    implementation Retrofit.core
 
 //Timber
     implementation LoggerFramework.timber
